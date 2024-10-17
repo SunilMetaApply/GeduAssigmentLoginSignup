@@ -1,66 +1,17 @@
 "use client"
-import { Button, Container, Grid, TextField, IconButton } from '@mui/material';
+import { Button, Container, Grid, TextField, IconButton, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import * as Yup from 'yup';
-
-interface FormValues {
-    fName: string;
-    lName: string;
-    email: string;
-    contact?: number;
-    password: string;
-    confpassword: string;
-    busiName: string;
-    busiRegNum: string;
-    busiEmail: string;
-    busiContact?: number;
-    country: string;
-    state: string;
-    city: string;
-    zipcode?: number;
-}
-
-const validationSchema = Yup.object({
-    fName: Yup.string().required('First Name is required'),
-    lName: Yup.string().required('Last Name is required'),
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    contact: Yup.number().required('Contact number is required'),
-    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-    confpassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
-    busiName: Yup.string().required('Business Name is required'),
-    busiRegNum: Yup.string().required('Business Registration Number is required'),
-    busiEmail: Yup.string().email('Invalid email').required('Business Email is required'),
-    busiContact: Yup.number().required('Business Contact number is required'),
-    country: Yup.string().required('Country is required'),
-    state: Yup.string().required('State is required'),
-    city: Yup.string().required('City is required'),
-    zipcode: Yup.number().required('Zip Code is required'),
-});
+import { SignUpInterface } from '../interface';
+import { SignUpValidationSchema } from '../validationSchema';
+import {initialValues} from '../initialValues'
 
 const SignUp: React.FC = () => {
     const [submitLoad, setSubmitLoad] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-
-    const initialValues: FormValues = {
-        fName: '',
-        lName: '',
-        email: '',
-        contact: undefined,
-        password: '',
-        confpassword: '',
-        busiName: '',
-        busiRegNum: '',
-        busiEmail: '',
-        busiContact: undefined,
-        country: '',
-        state: '',
-        city: '',
-        zipcode: undefined,
-    };
-
-    const handleSubmit = (values: FormValues) => {
+    
+    const handleSubmit = (values: SignUpInterface) => {
         setSubmitLoad(true);
         setTimeout(() => {
             console.log(values); 
@@ -69,11 +20,11 @@ const SignUp: React.FC = () => {
     };
 
     return (
-        <Container>
-            <h1 className='heading'>Signup Form</h1>
+        <Container sx={{padding:'10px 0px 20px'}}>
+            <h1 className='heading'>Sign up</h1>
             <Formik
                 initialValues={initialValues}
-                validationSchema={validationSchema}
+                validationSchema={SignUpValidationSchema}
                 onSubmit={handleSubmit}
             >
                 {({ handleChange, handleBlur, values, errors, touched }) => (
@@ -292,11 +243,19 @@ const SignUp: React.FC = () => {
                                     helperText={touched.zipcode && errors.zipcode}
                                 />
                             </Grid>
+
+                            <Grid item xs={5}>
+                                <FormGroup>
+                                    <FormControlLabel control={<Checkbox />} label="I agree to the T&C and Privacy Policy" />
+                                </FormGroup>
+                            </Grid>
+                            
                             <Grid item xs={12}>
                                 <Button variant="contained" type="submit" disabled={submitLoad}>
-                                    {submitLoad ? 'Submitting...' : 'Submit'}
+                                    {submitLoad ? 'Submitting...' : 'Sign Up'}
                                 </Button>
                             </Grid>
+
                         </Grid>
                     </Form>
                 )}
