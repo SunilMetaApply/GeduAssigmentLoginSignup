@@ -1,7 +1,8 @@
 "use client"
-import { Button, Container, Grid, TextField } from '@mui/material';
+import { Button, Container, Grid, TextField, IconButton } from '@mui/material';
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import * as Yup from 'yup';
 
 interface FormValues {
@@ -40,6 +41,7 @@ const validationSchema = Yup.object({
 
 const SignUp: React.FC = () => {
     const [submitLoad, setSubmitLoad] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const initialValues: FormValues = {
         fName: '',
@@ -77,6 +79,9 @@ const SignUp: React.FC = () => {
                 {({ handleChange, handleBlur, values, errors, touched }) => (
                     <Form className="container">
                         <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <h4>PERSONAL DETAILS: </h4>
+                            </Grid>
                             <Grid item xs={4}>
                                 <Field
                                     as={TextField}
@@ -136,12 +141,22 @@ const SignUp: React.FC = () => {
                                     fullWidth
                                     name="password"
                                     label="Password*"
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.password}
                                     error={touched.password && Boolean(errors.password)}
                                     helperText={touched.password && errors.password}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <IconButton
+                                                onClick={() => setShowPassword(!showPassword)}
+                                                edge="end"
+                                            >
+                                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        ),
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={4}>
@@ -150,13 +165,26 @@ const SignUp: React.FC = () => {
                                     fullWidth
                                     name="confpassword"
                                     label="Confirm Password*"
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.confpassword}
                                     error={touched.confpassword && Boolean(errors.confpassword)}
                                     helperText={touched.confpassword && errors.confpassword}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <IconButton
+                                                onClick={() => setShowPassword(!showPassword)}
+                                                edge="end"
+                                            >
+                                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        ),
+                                    }}
                                 />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <h4>BUSINESS DETAILS:</h4>
                             </Grid>
                             <Grid item xs={4}>
                                 <Field
