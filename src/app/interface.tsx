@@ -20,3 +20,17 @@ export interface SignInInterface{
     email: string;
     password: string;
 }
+
+
+// Create Student interface
+export interface CreateSInterface {
+    fName: string;
+    lName: string;
+    email: string;
+    contact?: number;
+    gender:string;
+    dob?:number;
+    martialStatus:string;
+    country:string
+
+}

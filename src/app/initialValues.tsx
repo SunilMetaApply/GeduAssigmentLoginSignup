@@ -1,4 +1,4 @@
-import { SignUpInterface } from "./interface";
+import { SignUpInterface, CreateSInterface } from "./interface";
 
 
 export const initialValues: SignUpInterface = {
@@ -16,4 +16,15 @@ export const initialValues: SignUpInterface = {
     state: '',
     city: '',
     zipcode: undefined,
+};
+
+export const CreateSInitialValues: CreateSInterface = {
+    fName: '',
+    lName: '',
+    email: '',
+    contact: undefined,
+    gender:'',
+    dob:undefined,
+    martialStatus:'',
+    country: '',
 };

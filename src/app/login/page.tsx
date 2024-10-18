@@ -1,36 +1,52 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
-import { Button, Container, Grid, TextField, IconButton } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { SignInInterface } from '../interface';
+import { TextField, Button, Grid, IconButton, Container } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import * as Yup from 'yup';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
-const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-});
+interface LoginFormValues {
+    email: string;
+    password: string;
+}
 
+const LoginForm: React.FC = () => {
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [submitLoad, setSubmitLoad] = useState<boolean>(false);
+    const router = useRouter();
 
-const Login:React.FC = () => {
-    const [submitLoad, setSubmitLoad] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-
-    const initialValues: SignInInterface = {
+    const initialValues: LoginFormValues = {
         email: '',
-        password: '',
+        password: ''
     };
 
-    const handleSubmit = (values: SignInInterface) => {
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().email('Invalid email format').required('Required'),
+        password: Yup.string().required('Required')
+    });
+
+    const handleSubmit = async (values: LoginFormValues) => {
         setSubmitLoad(true);
-        setTimeout(() => {
-            console.log(values); 
+        try {
+            const response = await axios.post('https://api-dev.eduapply.io/api/v1/Auth/login', {
+                email: values.email,
+                password: values.password,
+                clientIp: '14.195.20.42',
+                deviceId: 'b34201c7-7d61-414f-be9c-856c19c83328'
+            });
+            console.log('Login successful:', response.data);
+            router.replace('/students'); 
+        } catch (error) {
+            console.error('Login failed:', error);
+        } finally {
             setSubmitLoad(false);
-        }, 1000);
+        }
     };
 
-  return (
-    <>
+    return (
         <Container maxWidth="sm">
             <h1 className='heading'>Login</h1>
             <Formik
@@ -80,7 +96,7 @@ const Login:React.FC = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Button variant="contained" type="submit" disabled={submitLoad}>
-                                    {submitLoad ? 'Submitting...' : 'Sign Up'}
+                                    {submitLoad ? 'Submitting...' : 'Login'}
                                 </Button>
                             </Grid>
                         </Grid>
@@ -88,8 +104,7 @@ const Login:React.FC = () => {
                 )}
             </Formik>
         </Container>
-    </>
-  )
-}
+    );
+};
 
-export default Login
+export default LoginForm;

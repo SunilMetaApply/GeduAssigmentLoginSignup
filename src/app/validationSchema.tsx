@@ -16,3 +16,18 @@ export const SignUpValidationSchema = Yup.object({
     city: Yup.string().required('City is required'),
     zipcode: Yup.number().required('Zip Code is required'),
 });
+
+
+
+
+// validation schema add-student
+export const AddStudentSchema = Yup.object({
+    fName: Yup.string().required('First Name is required'),
+    lName: Yup.string().required('Last Name is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    contact: Yup.number().required('Contact number is required'),
+    gender: Yup.string().required('Gender is required'),
+    dob: Yup.number().required('DOB is required'),
+    martialStatus: Yup.string().required('Martial Status is required'),
+    country: Yup.string().required('Country is required'),
+});
