@@ -19,7 +19,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 interface TestScore {
   testType: string;
-  doe: Date | null;
+  dateOfExam: Date | null;
   expiryDate: Date | null;
   rollNumber: string;
 }
@@ -32,7 +32,7 @@ const validationSchema = Yup.object().shape({
   testScores: Yup.array().of(
     Yup.object().shape({
       testType: Yup.string().required('Test Type is required'),
-      doe: Yup.date().required('Date of exam is required'),
+      dateOfExam: Yup.date().required('Date of exam is required'),
       expiryDate: Yup.date().required('Exam expiry date is required'),
       rollNumber: Yup.string().required('Roll Number is required'),
     })
@@ -72,7 +72,7 @@ const StudentDetail: React.FC<StudentDetailProps> = ({ params }) => {
               </Grid>
               <Grid item xs={6}>
                 <Button type="button" onClick={() => {
-                        const newTestScore = { testType: '', doe: null, expiryDate: null, rollNumber: '' };
+                        const newTestScore = { testType: '', dateOfExam: null, expiryDate: null, rollNumber: '' };
                         setFieldValue('testScores', [newTestScore, ...values.testScores]);
                     }}>
                   <AddIcon />
@@ -81,6 +81,7 @@ const StudentDetail: React.FC<StudentDetailProps> = ({ params }) => {
             </Grid>
 
             {values.testScores.length === 0 && <p style={{ marginTop: '20px' }}>Add Test Scores</p>}
+            
             {values.testScores.map((testScore, index) => (
               <Grid container key={index} spacing={2} style={{ marginTop: '20px' }}>
                 <Grid item xs={6}>
@@ -116,11 +117,11 @@ const StudentDetail: React.FC<StudentDetailProps> = ({ params }) => {
                   </FormControl>
                 </Grid>
                 <Grid item xs={6}>
-                  <Field name={`testScores.${index}.doe`}>
+                  <Field name={`testScores.${index}.dateOfExam`}>
                     {({ field }: any) => (
                       <DatePicker
                         selected={field.value}
-                        onChange={date => setFieldValue(`testScores.${index}.doe`, date)}
+                        onChange={date => setFieldValue(`testScores.${index}.dateOfExam`, date)}
                         dateFormat="yyyy/MM/dd"
                         placeholderText="Date of exam"
                         className="date-picker"
@@ -128,7 +129,7 @@ const StudentDetail: React.FC<StudentDetailProps> = ({ params }) => {
                       />
                     )}
                   </Field>
-                  <ErrorMessage name={`testScores.${index}.doe`} component="div" className='red' />
+                  <ErrorMessage name={`testScores.${index}.dateOfExam`} component="div" className='red' />
                 </Grid>
                 <Grid item xs={6}>
                   <Field name={`testScores.${index}.expiryDate`}>
@@ -161,7 +162,7 @@ const StudentDetail: React.FC<StudentDetailProps> = ({ params }) => {
                   <Button
                     variant="outlined"
                     color="error"
-                    onClick={() => { setFieldValue(`testScores.${index}`, { testType: '', doe: null, expiryDate: null, rollNumber: '' }); }}
+                    onClick={() => { setFieldValue(`testScores.${index}`, { testType: '', dateOfExam: null, expiryDate: null, rollNumber: '' }); }}
                     style={{ marginLeft: '10px' }}
                   >
                     Clear

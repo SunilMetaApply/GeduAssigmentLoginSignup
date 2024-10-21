@@ -6,10 +6,12 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { SignUpInterface } from '../interface';
 import { SignUpValidationSchema } from '../validationSchema';
 import {initialValues} from '../initialValues'
+import Link from 'next/link';
 
 const SignUp: React.FC = () => {
     const [submitLoad, setSubmitLoad] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfPassword, setShowConfPassword] = useState(false);
     
     const handleSubmit = (values: SignUpInterface) => {
         setSubmitLoad(true);
@@ -116,7 +118,7 @@ const SignUp: React.FC = () => {
                                     fullWidth
                                     name="confpassword"
                                     label="Confirm Password*"
-                                    type={showPassword ? 'text' : 'password'}
+                                    type={showConfPassword ? 'text' : 'password'}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.confpassword}
@@ -125,10 +127,10 @@ const SignUp: React.FC = () => {
                                     InputProps={{
                                         endAdornment: (
                                             <IconButton
-                                                onClick={() => setShowPassword(!showPassword)}
+                                                onClick={() => setShowConfPassword(!showConfPassword)}
                                                 edge="end"
                                             >
-                                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                                {showConfPassword ? <Visibility /> : <VisibilityOff />}
                                             </IconButton>
                                         ),
                                     }}
@@ -260,6 +262,11 @@ const SignUp: React.FC = () => {
                     </Form>
                 )}
             </Formik>
+
+            <br /><br />
+
+            <p>Already have an account?<Link href="/login">Sign In</Link></p>
+
         </Container>
     );
 }

@@ -1,11 +1,17 @@
-import React from 'react'
+// import type { NextRequest } from 'next/server';
 
-const MiddleWare = () => {
-  return (
-    <>
-        
-    </>
-  )
-}
+// export function middleware(request: NextRequest) {
+//     const currentUser = request.cookies.get('currentUser')?.value;
 
-export default MiddleWare
+//     if (currentUser && request.nextUrl.pathname === '/login') {
+//         return Response.redirect(new URL('/students', request.url));
+//     }
+
+//     if (!currentUser && !request.nextUrl.pathname.startsWith('/login')) {
+//         return Response.redirect(new URL('/login', request.url));
+//     }
+// }
+
+// // export const config = {
+// //     matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+// // };

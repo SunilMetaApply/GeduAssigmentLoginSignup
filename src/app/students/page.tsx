@@ -72,7 +72,6 @@ const AddStudentSchema = Yup.object({
   country: Yup.string().required('Country is required'),
 });
 
-// Initial values for the form
 const CreateSInitialValues: CreateSInterface = {
   fName: '',
   lName: '',

@@ -1,15 +1,25 @@
-import { Button, Container } from '@mui/material'
-import React from 'react'
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { Button, Container } from '@mui/material';
 
-const Header = () => { 
+const Header: React.FC = () => {
+    const router = useRouter();
     
-  return (
-    <>
-    <Container>
-        <Button sx={{margin:'10px 0px'}}>Logout</Button>
-    </Container>
-    </>
-  )
-}
+    const handleLogout = () => {
+        Cookies.remove('currentUser');
+        router.replace('/login');
+    };
 
-export default Header
+    return (
+      <>
+        <Container>
+          <Button sx={{margin:'10px 0px'}} variant="contained" onClick={handleLogout}>
+              Logout
+          </Button>
+        </Container>
+      </>
+    );
+};
+
+export default Header;
